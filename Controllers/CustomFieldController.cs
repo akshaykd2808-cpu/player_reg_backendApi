@@ -18,10 +18,14 @@ namespace playerregproject.Controllers
             _customFieldService = customFieldService;
         }
 
-        [HttpPost]
-         public async Task<IActionResult> CreateCustomField(CreateCustomFieldDTO dto)
+        [HttpPost("CreateCustomField")]
+         public async Task<IActionResult> CreateCustomField([FromBody] CreateCustomFieldDTO dto)
         {
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // 🔥 shows exact issue
+            }
             await _customFieldService.AddCustomFieldAsync(dto);
 
             return Ok(new { message = "Custom Field added successfully" });

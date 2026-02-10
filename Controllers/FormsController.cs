@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using playerregproject.Interface.Services;
 using playerregproject.Models;
 using System.Security.Claims;
 
 namespace playerregproject.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class FormsController : ControllerBase
@@ -22,13 +23,19 @@ namespace playerregproject.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> CreateForm(Form form)
+        [HttpPost("CreateForm")]
+        public async Task<IActionResult> CreateForm([FromForm] Form form)
 
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+
+            }
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if(username == null)
+            if (username == null)
             {
                 return Unauthorized(new { message = "User is not authenticated" });
             }
@@ -38,9 +45,22 @@ namespace playerregproject.Controllers
             return Ok(new { message = "Form created successfully" });
         }
 
+        [HttpGet("GetForms")]
+        public async Task<IActionResult> GetFormsForDropdown()
+        {
+            var forms = await _formService.GetFormsAsync(); // Correctly call the method to retrieve the list of forms
 
+            var activeForms = forms
+                .Where(x => x.isActive) // Use the correct property name 'isActive' (case-sensitive)
+                .Select(x => new Form
+                {
+                    Id = x.Id,
+                    FormName = x.FormName
+                })
+                .ToList();
 
-
-
+            return Ok(activeForms);
+        }
     }
+
 }

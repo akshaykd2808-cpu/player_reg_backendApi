@@ -39,6 +39,7 @@ namespace playerregproject.Controllers
             var UserExist = await _dbContext.Users.FirstOrDefaultAsync(user =>
             user.Username == RegisterRequest.Username);
 
+
             if (UserExist == null)
             {
                 return BadRequest(new { message = "Invalid Credentials" });

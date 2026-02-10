@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using playerregproject.Data;
 
@@ -11,9 +12,11 @@ using playerregproject.Data;
 namespace playerregproject.Migrations
 {
     [DbContext(typeof(PlayerRegDbContext))]
-    partial class PlayerRegDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203162533_AddImageField")]
+    partial class AddImageField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace playerregproject.Models
 
@@ -16,11 +17,16 @@ namespace playerregproject.Models
 
         [Required]
         public decimal Amount { get; set; }
-        [Required]
+        
 
-        public int isActive { get; set; } = 1;
+        public string? ImageUrl { get; set; }  // store image path
 
-        [Required]
+        [NotMapped]
+        public IFormFile Image { get; set; }
+
+        public bool isActive { get; set; } 
+
+        
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     }

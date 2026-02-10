@@ -17,9 +17,9 @@ namespace playerregproject.Models
         public string FieldType { get; set; } = string.Empty;
 
         [Required]
-        public int IsRequired { get; set; }
+        public bool IsRequired { get; set; }
 
-        public required ICollection<CustomFieldValue> Values { get; set; }
+        public ICollection<CustomFieldValue>? Values { get; set; } 
 
     }
 }
