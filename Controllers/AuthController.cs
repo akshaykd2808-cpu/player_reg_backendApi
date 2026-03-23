@@ -42,7 +42,9 @@ namespace playerregproject.Controllers
 
             if (UserExist == null)
             {
+            
                 return BadRequest(new { message = "Invalid Credentials" });
+                
             }
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(RegisterRequest.Password, UserExist.Password);
